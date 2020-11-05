@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, Boolean, UnicodeText
+from sqlalchemy import Boolean, Column, String, UnicodeText
+
 from telepyrobot import OWNER_ID
 from telepyrobot.db import BASE, SESSION
 

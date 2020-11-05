@@ -1,25 +1,25 @@
 import asyncio
-import math
-import os
-import time
-from datetime import datetime
-from pySmartDL import SmartDL
-from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters
-from pyrogram.types import Message
 import json
 import logging
+import math
+import os
 import re
+import time
 import urllib.parse
+from datetime import datetime
 from random import choice
 
 import requests
 from bs4 import BeautifulSoup
 from pyDownload import Downloader
+from pyrogram import filters
+from pyrogram.types import Message
+from pySmartDL import SmartDL
 
 from telepyrobot import COMMAND_HAND_LER, LOGGER, TMP_DOWNLOAD_DIRECTORY
-from telepyrobot.utils.display_progress_dl_up import progress_for_pyrogram, humanbytes
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
+from telepyrobot.utils.display_progress_dl_up import humanbytes, progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -72,7 +72,8 @@ async def down_load_media(c: TelePyroBot, m: Message):
             url, custom_file_name = the_url_parts.split("|")
             url = url.strip()
             custom_file_name = custom_file_name.strip()
-        download_file_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, custom_file_name)
+        download_file_path = os.path.join(
+            TMP_DOWNLOAD_DIRECTORY, custom_file_name)
         downloader = SmartDL(url, download_file_path, progress_bar=False)
         downloader.start(blocking=False)
         c_time = time.time()
@@ -101,7 +102,9 @@ async def down_load_media(c: TelePyroBot, m: Message):
                 )
                 current_message += f"**Download Speed** __{speed}__\n"
                 current_message += f"**ETA:** __{estimated_total_time}__"
-                if round(diff % 10.00) == 0 and current_message != display_message:
+                if round(
+                        diff %
+                        10.00) == 0 and current_message != display_message:
                     await sm.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
@@ -120,7 +123,8 @@ async def down_load_media(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("upload",
+                                        COMMAND_HAND_LER) & filters.me)
 async def upload_as_document(c: TelePyroBot, m: Message):
     status_message = await m.reply_text("`Uploading...`")
     if " " in m.text:
@@ -152,7 +156,8 @@ async def upload_as_document(c: TelePyroBot, m: Message):
     await m.delete()
 
 
-@TelePyroBot.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("batchup",
+                                        COMMAND_HAND_LER) & filters.me)
 async def covid(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
         await m.edit("`Enter a directory location`")
@@ -162,15 +167,15 @@ async def covid(c: TelePyroBot, m: Message):
             temp_dir += "/"
     status_message = await m.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
-        files = os.listdir(temp_dir)
-        files.sort()
+        files = sorted(os.listdir(temp_dir))
         await status_message.edit("`Uploading Files to Telegram...`")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir + file
             thumb_image_path = await is_thumb_image_exists(required_file_name)
             doc_caption = os.path.basename(required_file_name)
-            LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
+            LOGGER.info(
+                f"Uploading {required_file_name} from {temp_dir} to Telegram.")
             await c.send_document(
                 chat_id=m.chat.id,
                 document=required_file_name,

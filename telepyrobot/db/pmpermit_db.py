@@ -1,6 +1,8 @@
-from sqlalchemy import Column, String, Integer
-from telepyrobot.db import BASE, SESSION
 import threading
+
+from sqlalchemy import Column, Integer, String
+
+from telepyrobot.db import BASE, SESSION
 
 
 class PMTable(BASE):

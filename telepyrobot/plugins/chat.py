@@ -1,9 +1,11 @@
-import os
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
+import os
+
 from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
+from pyrogram.types import ChatPermissions, Message
+
 from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.admin_check import admin_check
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -31,7 +33,8 @@ Usage: {COMMAND_HAND_LER}setchatdesc (chatdesc or as a reply to the message)
 """
 
 
-@TelePyroBot.on_message(filters.command("leavechat", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("leavechat",
+                                        COMMAND_HAND_LER) & filters.me)
 async def leavechat(c: TelePyroBot, m: Message):
     if m.chat.type in ["group", "supergroup"]:
         chat_id = m.chat.id
@@ -42,7 +45,8 @@ async def leavechat(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("invitelink", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("invitelink",
+                                        COMMAND_HAND_LER) & filters.me)
 async def invitelink(c: TelePyroBot, m: Message):
     is_admin = await admin_check(c, m)
     if not is_admin:
@@ -53,7 +57,8 @@ async def invitelink(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("setchatpic", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("setchatpic",
+                                        COMMAND_HAND_LER) & filters.me)
 async def set_picture(c: TelePyroBot, m: Message):
     if m.chat.type in ["group", "supergroup"]:
         is_admin = await admin_check(c, m)
@@ -74,7 +79,8 @@ async def set_picture(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("delchatpic", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("delchatpic",
+                                        COMMAND_HAND_LER) & filters.me)
 async def delchatpic(c: TelePyroBot, m: Message):
     is_admin = await admin_check(c, m)
     if not is_admin:
@@ -87,7 +93,8 @@ async def delchatpic(c: TelePyroBot, m: Message):
         await m.edit(f"Error deleting Chat Pic due to:\n`{ef}`")
 
 
-@TelePyroBot.on_message(filters.command("setchatname", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("setchatname",
+                                        COMMAND_HAND_LER) & filters.me)
 async def setchatname(c: TelePyroBot, m: Message):
     await m.edit("__Trying to Change Chat Name!__")
     is_admin = await admin_check(c, m)
@@ -106,7 +113,8 @@ async def setchatname(c: TelePyroBot, m: Message):
         await m.edit(f"**Could not Change Chat Title due to:**\n`{ef}`")
 
 
-@TelePyroBot.on_message(filters.command("setchatdesc", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("setchatdesc",
+                                        COMMAND_HAND_LER) & filters.me)
 async def setchatdesc(c: TelePyroBot, m: Message):
     await m.edit("__Trying to Change Chat Desciption!__")
     is_admin = await admin_check(c, m)

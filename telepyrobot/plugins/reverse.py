@@ -1,15 +1,17 @@
+import asyncio
 import os
-from datetime import datetime
 import shlex
+from datetime import datetime
+from os.path import basename
+from typing import Optional, Tuple
+
 import requests
 from bs4 import BeautifulSoup
-from typing import Tuple, Optional
-from os.path import basename
-import asyncio
-from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER, LOGGER
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -41,7 +43,8 @@ async def take_screen_shot(
 ) -> Optional[str]:
     """take a screenshot."""
     ttl = duration // 2
-    thumb_image_path = path or os.path.join(screen_shot, f"{basename(video_file)}.jpg")
+    thumb_image_path = path or os.path.join(
+        screen_shot, f"{basename(video_file)}.jpg")
     command = f"ffmpeg -ss {ttl} -i '{video_file}' -vframes 1 '{thumb_image_path}'"
     err = (await run_cmd(command))[1]
     if err:
@@ -49,7 +52,8 @@ async def take_screen_shot(
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-@TelePyroBot.on_message(filters.command("reverse", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("reverse",
+                                        COMMAND_HAND_LER) & filters.me)
 async def google_rs(c: TelePyroBot, m: Message):
     await m.edit("`Searching...`")
     start = datetime.now()

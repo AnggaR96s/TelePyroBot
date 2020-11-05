@@ -1,8 +1,10 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.parser import mention_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -18,7 +20,8 @@ or
 """
 
 
-@TelePyroBot.on_message(filters.command("mention", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("mention",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mention(c: TelePyroBot, m: Message):
     args = m.text.split(" ", 2)
     if len(args) == 3:

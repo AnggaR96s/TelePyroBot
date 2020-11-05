@@ -1,9 +1,11 @@
+import os
+
 from googletrans import Translator
-from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
-import os
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 trl = Translator()
 
@@ -21,7 +23,8 @@ Reply a message to translate that.
 
 @TelePyroBot.on_message(filters.me & filters.command("tr", COMMAND_HAND_LER))
 async def translate(c: TelePyroBot, m: Message):
-    if m.reply_to_message and (m.reply_to_message.text or m.reply_to_message.caption):
+    if m.reply_to_message and (
+            m.reply_to_message.text or m.reply_to_message.caption):
         if len(m.text.split()) == 1:
             await m.edit("Usage: Reply to a message, then `tr <lang>`")
             return

@@ -1,9 +1,11 @@
-import pyfiglet
 import os
-from telepyrobot.__main__ import TelePyroBot
+
+import pyfiglet
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -17,7 +19,8 @@ https://nekobin.com/hesoyipowo
 """
 
 
-@TelePyroBot.on_message(filters.command("figlet", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("figlet",
+                                        COMMAND_HAND_LER) & filters.me)
 async def figlet_font(c: TelePyroBot, m: Message):
     CMD_FIG = {
         "slant": "slant",

@@ -1,12 +1,12 @@
-import os
 import importlib
 
 # the logging things
 import logging
+import os
 
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
@@ -71,5 +71,6 @@ def load_cmds(ALL_PLUGINS):
             )
 
         if hasattr(imported_module, "__help__") and imported_module.__help__:
-            HELP_COMMANDS[imported_module.__PLUGIN__.lower()] = imported_module.__help__
+            HELP_COMMANDS[imported_module.__PLUGIN__.lower()
+                          ] = imported_module.__help__
     return "Done Loading Plugins and Commands!"

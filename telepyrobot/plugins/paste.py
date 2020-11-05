@@ -1,12 +1,13 @@
-import aiohttp
 import json
 import os
 from urllib.parse import urlparse
-from telepyrobot.__main__ import TelePyroBot
+
+import aiohttp
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
-import os
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -58,7 +59,8 @@ async def paste_bin(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 2:
         default_paste = m.text.split(" ", 1)[1]
 
-    paste_store_url = paste_bin_store_s.get(default_paste, paste_bin_store_s["nekobin"])
+    paste_store_url = paste_bin_store_s.get(
+        default_paste, paste_bin_store_s["nekobin"])
     paste_store_base_url_rp = urlparse(paste_store_url)
 
     paste_store_base_url = (
@@ -70,7 +72,10 @@ async def paste_bin(c: TelePyroBot, m: Message):
         response_jn = await response_d.json()
 
     t_w_attempt = key_nikalo(response_jn)
-    required_url = json.dumps(t_w_attempt, sort_keys=True, indent=4) + "\n\n #ERROR"
+    required_url = json.dumps(
+        t_w_attempt,
+        sort_keys=True,
+        indent=4) + "\n\n #ERROR"
     if t_w_attempt is not None:
         required_url = paste_store_base_url + "/" + t_w_attempt
     await m.edit(

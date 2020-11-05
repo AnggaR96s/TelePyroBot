@@ -1,8 +1,10 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.parser import mention_html, mention_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -37,7 +39,7 @@ async def adminlist(c: TelePyroBot, m: Message):
     async for a in alladmins:
         try:
             nama = a.user.first_name + " " + a.user.last_name
-        except:
+        except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = "☠️ Deleted account"
@@ -130,7 +132,7 @@ async def listbots(c: TelePyroBot, m: Message):
     async for a in getbots:
         try:
             nama = a.user.first_name + " " + a.user.last_name
-        except:
+        except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = "☠️ Deleted account"

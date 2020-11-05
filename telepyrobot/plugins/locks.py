@@ -1,20 +1,21 @@
+import asyncio
 import os
 import time
-import asyncio
 from datetime import datetime
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
+from pyrogram.types import ChatPermissions, Message
+
 from telepyrobot import (
     COMMAND_HAND_LER,
-    TG_MAX_SELECT_LEN,
-    PRIVATE_GROUP_ID,
     OWNER_ID,
     OWNER_NAME,
+    PRIVATE_GROUP_ID,
+    TG_MAX_SELECT_LEN,
 )
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.admin_check import admin_check
-from telepyrobot.utils.parser import mention_markdown, escape_markdown
-
+from telepyrobot.utils.parser import escape_markdown, mention_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -139,7 +140,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
         perm = "pin"
 
     else:
-        await m.edit("`Invalid Lock Type! ¯\_(ツ)_/¯`")
+        await m.edit(r"`Invalid Lock Type! ¯\_(ツ)_/¯`")
         await asyncio.sleep(5)
         await m.delete()
         return
@@ -181,7 +182,8 @@ async def lock_perm(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("unlock", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("unlock",
+                                        COMMAND_HAND_LER) & filters.me)
 async def unlock_perm(c: TelePyroBot, m: Message):
     umsg = ""
     umedia = ""
@@ -301,7 +303,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
         uperm = "pin"
 
     else:
-        await m.edit("`Invalid Unlock Type! ¯\_(ツ)_/¯`")
+        await m.edit(r"`Invalid Unlock Type! ¯\_(ツ)_/¯`")
         await asyncio.sleep(5)
         await m.delete()
         return
@@ -339,7 +341,8 @@ async def unlock_perm(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("vperm", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("vperm",
+                                        COMMAND_HAND_LER) & filters.me)
 async def view_perm(c: TelePyroBot, m: Message):
     v_perm = ""
     vmsg = ""

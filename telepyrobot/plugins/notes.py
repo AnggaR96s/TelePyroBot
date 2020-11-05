@@ -1,13 +1,14 @@
-from telepyrobot.__main__ import TelePyroBot
+import asyncio
+import os
+
 from pyrogram import filters
 from pyrogram.types import Message
-import os
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.db import notes_db as db
 from telepyrobot.utils.msg_types import Types, get_note_type
 from telepyrobot.utils.pyrohelpers import ReplyCheck
-import asyncio
-from telepyrobot.db import notes_db as db
-
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
@@ -91,7 +92,9 @@ async def get_note(c: TelePyroBot, m: Message):
         Types.ANIMATED_STICKER,
     ):
         # type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
-        # await GET_FORMAT[getnotes['type']](chat_id=m.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        # await GET_FORMAT[getnotes['type']](chat_id=m.chat.id,
+        # type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'],
+        # reply_to_message_id=ReplyCheck(message))
         await m.edit("`Currently not supported!`")
     else:
         """if getnotes.get('value'):
@@ -123,7 +126,8 @@ async def local_notes(c: TelePyroBot, m: Message):
     await m.edit(rply)
 
 
-@TelePyroBot.on_message(filters.me & filters.command("clear", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me &
+                        filters.command("clear", COMMAND_HAND_LER))
 async def clear_note(c: TelePyroBot, m: Message):
     if len(m.text.split()) <= 1:
         await m.edit(
@@ -154,7 +158,8 @@ async def clear_all_notes(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.me & filters.command("numnotes", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me &
+                        filters.command("numnotes", COMMAND_HAND_LER))
 async def get_num_notes(c: TelePyroBot, m: Message):
     num_notes = db.get_num_notes(m.from_user.id)
     await m.edit(f"`There are total <u>{num_notes}</u> stored`")

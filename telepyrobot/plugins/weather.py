@@ -1,10 +1,12 @@
-from html import escape
-import requests
 import os
-from telepyrobot.__main__ import TelePyroBot
+from html import escape
+
+import requests
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -16,7 +18,8 @@ Powered by: https://wttr.in
 """
 
 
-@TelePyroBot.on_message(filters.command("weather", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("weather",
+                                        COMMAND_HAND_LER) & filters.me)
 async def weather(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
         await m.edit(

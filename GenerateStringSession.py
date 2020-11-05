@@ -1,9 +1,9 @@
 import asyncio
+
 from pyrogram import Client
 
-
 try:
-    from telepyrobot import APP_ID, API_HASH
+    from telepyrobot import API_HASH, APP_ID
 except ModuleNotFoundError:
     APP_ID = int(input("Enter Telegram APP ID: "))
     API_HASH = input("Enter Telegram API HASH: ")

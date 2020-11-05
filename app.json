@@ -1,6 +1,6 @@
 {
   "name": "TelePyroBot",
-  "description": "Pyrogram based UserBot made by Skuzzy xD",
+  "description": "Pyrogram based UserBot",
   "keywords": [
     "telegram",
     "best",
@@ -13,7 +13,7 @@
     "telepyrobot",
     "telepyrobot"
   ],
-  "repository": "https://github.com/SkuzzyxD/TelePyroBot",
+  "repository": "https://github.com/AnggaR96s/TelePyroBot",
   "stack": "container",
   "env": {
     "ENV": {

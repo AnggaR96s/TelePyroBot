@@ -1,12 +1,14 @@
-import os
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
+import os
+
 from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
-from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
+from pyrogram.types import ChatPermissions, Message
+
+from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID, TG_MAX_SELECT_LEN
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.admin_check import admin_check
-from telepyrobot.utils.pyrohelpers import extract_user
 from telepyrobot.utils.parser import mention_markdown
+from telepyrobot.utils.pyrohelpers import extract_user
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -30,7 +32,8 @@ Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
 """
 
 
-@TelePyroBot.on_message(filters.command("promote", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("promote",
+                                        COMMAND_HAND_LER) & filters.me)
 async def promote_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Promote user...`")
     is_admin = await admin_check(c, m)
@@ -69,7 +72,8 @@ async def promote_usr(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("demote", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("demote",
+                                        COMMAND_HAND_LER) & filters.me)
 async def demote_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Demote user...`")
     is_admin = await admin_check(c, m)

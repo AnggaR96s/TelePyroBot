@@ -1,12 +1,14 @@
-from telepyrobot.__main__ import TelePyroBot
+import os
+import shutil
+from time import sleep
+
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot import COMMAND_HAND_LER
-from telepyrobot.utils.pyrohelpers import ReplyCheck
 from requests import post
-import shutil
-import os
-from time import sleep
+
+from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.utils.pyrohelpers import ReplyCheck
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -17,7 +19,8 @@ __help__ = f"""
 CARBON_LANG = "Auto"
 
 
-@TelePyroBot.on_message(filters.command("carbon", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("carbon",
+                                        COMMAND_HAND_LER) & filters.me)
 async def carbon_api(c: TelePyroBot, m: Message):
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",

@@ -1,12 +1,14 @@
-import os
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
+import os
+
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot.db import gmute_db as db
+
 from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
-from telepyrobot.utils.pyrohelpers import extract_user
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.db import gmute_db as db
 from telepyrobot.utils.parser import mention_markdown
+from telepyrobot.utils.pyrohelpers import extract_user
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -21,7 +23,8 @@ They will not be able to speak until you ungmute them!
 """
 
 
-@TelePyroBot.on_message(filters.command("gmute", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("gmute",
+                                        COMMAND_HAND_LER) & filters.me)
 async def start_gmute(c: TelePyroBot, m: Message):
     await m.edit("`Putting duct tape...`")
     user_id, user_first_name = await extract_user(c, m)
@@ -43,7 +46,8 @@ async def start_gmute(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("ungmute", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("ungmute",
+                                        COMMAND_HAND_LER) & filters.me)
 async def end_gmute(c: TelePyroBot, m: Message):
     await m.edit("`Removing duct tape...`")
     user_id, user_first_name = await extract_user(c, m)
@@ -66,7 +70,8 @@ async def end_gmute(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("gmutelist", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("gmutelist",
+                                        COMMAND_HAND_LER) & filters.me)
 async def list_gmuted(c: TelePyroBot, m: Message):
     await m.edit("`Loading users...`")
     users = db.get_gmute_users()

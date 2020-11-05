@@ -1,10 +1,12 @@
-from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters
-from pyrogram.types import Message
 import os
-from telepyrobot import COMMAND_HAND_LER
 import random
 import time
+
+from pyrogram import filters
+from pyrogram.types import Message
+
+from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 p = 0
 
@@ -13,7 +15,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Make quotes easily, from a message!
 Does not work on images!
- 
+
 `{COMMAND_HAND_LER}qbot`: As a reply to message to get its quote
 """
 
@@ -32,7 +34,7 @@ async def quotly(c: TelePyroBot, m: Message):
             msg = await c.get_history("@QuotLyBot", 1)
             check = msg[0]["sticker"]["file_id"]
             is_sticker = True
-        except:
+        except BaseException:
             time.sleep(0.5)
             progress += random.randint(0, 10)
             try:

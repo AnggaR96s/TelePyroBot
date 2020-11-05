@@ -1,8 +1,10 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -69,7 +71,8 @@ weebyfont = [
 ]
 
 
-@TelePyroBot.on_message(filters.command("weebify", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("weebify",
+                                        COMMAND_HAND_LER) & filters.me)
 async def weebify(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
         args = m.text.split(" ", 1)[1]

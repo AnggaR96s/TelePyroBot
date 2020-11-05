@@ -1,22 +1,23 @@
+import asyncio
 import os
 import time
-import asyncio
 from datetime import datetime
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
+from pyrogram.types import ChatPermissions, Message
+
 from telepyrobot import (
     COMMAND_HAND_LER,
-    TG_MAX_SELECT_LEN,
-    PRIVATE_GROUP_ID,
     OWNER_ID,
     OWNER_NAME,
+    PRIVATE_GROUP_ID,
+    TG_MAX_SELECT_LEN,
 )
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.db.afk_db import get_afk, set_afk
 from telepyrobot.utils.admin_check import admin_check
-from telepyrobot.utils.parser import mention_markdown, escape_markdown
 from telepyrobot.utils.msg_types import Types, get_message_type
-from telepyrobot.db.afk_db import set_afk, get_afk
-
+from telepyrobot.utils.parser import escape_markdown, mention_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -44,7 +45,8 @@ AFK_RESTIRECT = {}
 DELAY_TIME = 60  # seconds
 
 
-@TelePyroBot.on_message((filters.command("afk", COMMAND_HAND_LER)) & filters.me)
+@TelePyroBot.on_message((filters.command("afk",
+                                         COMMAND_HAND_LER)) & filters.me)
 async def afk(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit(
@@ -88,9 +90,8 @@ async def afk(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(
-    filters.mentioned & ~filters.bot & ~filters.chat(PRIVATE_GROUP_ID), group=11
-)
+@TelePyroBot.on_message(filters.mentioned & ~filters.bot &
+                        ~filters.chat(PRIVATE_GROUP_ID), group=11)
 async def afk_mentioned(c: TelePyroBot, m: Message):
     global MENTIONED
     global afk_time
@@ -137,7 +138,9 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
         else:
             cid = str(m.chat.id)
 
-        if cid in list(AFK_RESTIRECT) and int(AFK_RESTIRECT[cid]) >= int(time.time()):
+        if cid in list(AFK_RESTIRECT) and int(
+                AFK_RESTIRECT[cid]) >= int(
+                time.time()):
             return
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get["reason"]:
@@ -200,10 +203,8 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
     await m.stop_propagation()
 
 
-@TelePyroBot.on_message(
-    filters.me & (filters.group | filters.private) & ~filters.chat(PRIVATE_GROUP_ID),
-    group=12,
-)
+@TelePyroBot.on_message(filters.me & (filters.group | filters.private)
+                        & ~filters.chat(PRIVATE_GROUP_ID), group=12, )
 async def no_longer_afk(c: TelePyroBot, m: Message):
     global afk_time
     global afk_start

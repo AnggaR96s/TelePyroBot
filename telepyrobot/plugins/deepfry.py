@@ -1,15 +1,16 @@
+import asyncio
 import io
 import os
-import asyncio
 from random import randint, uniform
-from telepyrobot.__main__ import TelePyroBot
+
+from PIL import Image, ImageEnhance, ImageOps
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.msg_types import Types
 from telepyrobot.utils.pyrohelpers import extract_user
-from PIL import Image, ImageEnhance, ImageOps
-
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -21,7 +22,8 @@ Burn media files and make them look sick!
 """
 
 
-@TelePyroBot.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("deepfry",
+                                        COMMAND_HAND_LER) & filters.me)
 async def do_deepfry(c: TelePyroBot, m: Message):
     try:
         frycount = int(m.text.split(" ", 1)[1])

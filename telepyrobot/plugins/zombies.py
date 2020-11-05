@@ -1,10 +1,11 @@
-from telepyrobot.__main__ import TelePyroBot
+import asyncio
+import os
+
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
-import os
-import asyncio
 
+from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -20,7 +21,8 @@ Then this module is for you!
 """
 
 
-@TelePyroBot.on_message(filters.command("zombies", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("zombies",
+                                        COMMAND_HAND_LER) & filters.me)
 async def zombies_clean(c: TelePyroBot, m: Message):
     if len(m.text.split(" ")) != 2:
         await m.edit("`Counting deleted accounts!!!`")
@@ -48,7 +50,7 @@ async def zombies_clean(c: TelePyroBot, m: Message):
                         await c.kick_chat_member(m.chat.id, x.user.id)
                         u += 1
                         await asyncio.sleep(0.1)
-                    except:
+                    except BaseException:
                         pass
         await m.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
         await c.send_message(

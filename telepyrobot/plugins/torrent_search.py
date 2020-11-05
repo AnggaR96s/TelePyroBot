@@ -1,11 +1,13 @@
-import requests
-import json
 import asyncio
+import json
 import os
-from telepyrobot.__main__ import TelePyroBot
+
+import requests
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -16,7 +18,8 @@ Get Magnet Links of any search query.
 """
 
 
-@TelePyroBot.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("tsearch",
+                                        COMMAND_HAND_LER) & filters.me)
 async def tor_search(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
         await m.edit("`Check help on how to use this command`")
@@ -37,10 +40,9 @@ async def tor_search(c: TelePyroBot, m: Message):
             run += 1
             r1 = ts[run]
             list1 = "<-----{}----->\nName: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(
-                run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"]
-            )
+                run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"])
             listdata = listdata + list1
-        except:
+        except BaseException:
             break
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}torrent_search.txt"

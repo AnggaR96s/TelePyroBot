@@ -1,6 +1,8 @@
 import pickle
 import threading
-from sqlalchemy import Column, Integer, String, LargeBinary
+
+from sqlalchemy import Column, Integer, LargeBinary, String
+
 from telepyrobot.db import BASE, SESSION
 
 

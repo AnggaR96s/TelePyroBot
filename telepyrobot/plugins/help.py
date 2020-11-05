@@ -1,10 +1,11 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
+
+from telepyrobot import COMMAND_HAND_LER, HELP_COMMANDS, MAX_MESSAGE_LENGTH
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.plugins import ALL_PLUGINS
-from telepyrobot import HELP_COMMANDS
 
 HELP_DEFAULT = f"""
 To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
@@ -15,7 +16,8 @@ Get a list of all Plugins using:
 """
 
 
-@TelePyroBot.on_message(filters.command("plugins", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("plugins",
+                                        COMMAND_HAND_LER) & filters.me)
 async def list_plugins(c: TelePyroBot, m: Message):
     # Some Variables
     mods = ""
@@ -37,7 +39,8 @@ async def help_me(c: TelePyroBot, m: Message):
     elif len(m.command) == 2:
         module_name = m.text.split(" ", 1)[1]
         try:
-            HELP = f"**Help for __{module_name}__**\n\n" + HELP_COMMANDS[module_name]
+            HELP = f"**Help for __{module_name}__**\n\n" + \
+                HELP_COMMANDS[module_name]
             await m.reply_text(HELP, parse_mode="md", disable_web_page_preview=True)
             await m.delete()
         except Exception as ef:

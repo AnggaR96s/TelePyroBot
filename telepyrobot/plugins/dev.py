@@ -1,14 +1,16 @@
+import asyncio
 import io
 import os
 import sys
-import traceback
 import time
-import asyncio
+import traceback
+
 import requests
-from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
+
+from telepyrobot import COMMAND_HAND_LER, MAX_MESSAGE_LENGTH
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.cust_p_filters import sudo_filter
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -25,7 +27,8 @@ Get IP Address of userbot server.
 """
 
 
-@TelePyroBot.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command(["eval", "py"],
+                                        COMMAND_HAND_LER) & sudo_filter)
 async def eval(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("`Processing...`")
     cmd = m.text.split(" ", maxsplit=1)[1]
@@ -62,9 +65,7 @@ async def eval(c: TelePyroBot, m: Message):
 
     final_output = (
         "<b>EVAL</b>: <code>{}</code>\n\n<b>OUTPUT</b>:\n<code>{}</code> \n".format(
-            cmd, evaluation.strip()
-        )
-    )
+            cmd, evaluation.strip()))
 
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with open("eval.text", "w+", encoding="utf8") as out_file:
@@ -91,7 +92,8 @@ async def aexec(code, c, m):
     return await locals()["__aexec"](c, m)
 
 
-@TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command(["exec", "sh"],
+                                        COMMAND_HAND_LER) & sudo_filter)
 async def execution(c: TelePyroBot, m: Message):
     cmd = m.text.split(" ", maxsplit=1)[1]
 

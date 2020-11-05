@@ -1,13 +1,15 @@
+import asyncio
+import datetime
 import os
 import shutil
-import datetime
-import asyncio
-from prettytable import PrettyTable
+
 import requests
-from telepyrobot.__main__ import TelePyroBot
+from prettytable import PrettyTable
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -18,15 +20,16 @@ Check info of cases Covid19 (CoronaVirus) Disease
 """
 
 
-@TelePyroBot.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("covid",
+                                        COMMAND_HAND_LER) & filters.me)
 async def covid(c: TelePyroBot, m: Message):
     await m.edit("`Processing...`", parse_mode="md")
     cmd = m.text.split(" ", 1)
     if len(cmd) == 1:
-        r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
-        last_updated = datetime.datetime.fromtimestamp(r["updated"] / 1000).strftime(
-            "%Y-%m-%d %I:%M:%S"
-        )
+        r = requests.get(
+            "https://corona.lmao.ninja/v2/all?yesterday=true").json()
+        last_updated = datetime.datetime.fromtimestamp(
+            r["updated"] / 1000).strftime("%Y-%m-%d %I:%M:%S")
 
         ac = PrettyTable()
         ac.header = False

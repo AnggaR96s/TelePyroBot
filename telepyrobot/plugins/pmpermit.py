@@ -1,19 +1,21 @@
-import os
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
+import os
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import (
     COMMAND_HAND_LER,
     LOGGER,
     OWNER_ID,
+    OWNER_NAME,
     PM_PERMIT,
     PRIVATE_GROUP_ID,
-    OWNER_NAME,
 )
-from telepyrobot.utils.parser import mention_markdown
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.db import pmpermit_db as db
 from telepyrobot.utils.cust_p_filters import sudo_filter
+from telepyrobot.utils.parser import mention_markdown
 from telepyrobot.utils.pyrohelpers import extract_user
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -27,7 +29,8 @@ a message that you are not available
 `{COMMAND_HAND_LER}dispm`: To disallow a user to pm you!
 """
 
-DEFAULT_USER = str(OWNER_NAME) if OWNER_NAME else "Set `OWNER_NAME` in Config Vars"
+DEFAULT_USER = str(
+    OWNER_NAME) if OWNER_NAME else "Set `OWNER_NAME` in Config Vars"
 
 welc_txt = f"""
 **__Hello! This is__** @TelePyroBot
@@ -37,7 +40,8 @@ __Better not spam his Inbox!__
 """
 
 
-@TelePyroBot.on_message(filters.private & (~filters.me & ~filters.bot), group=3)
+@TelePyroBot.on_message(filters.private &
+                        (~filters.me & ~filters.bot), group=3)
 async def pm_block(c: TelePyroBot, m: Message):
     if not PM_PERMIT:
         return
@@ -62,9 +66,8 @@ async def pm_block(c: TelePyroBot, m: Message):
         return
 
 
-@TelePyroBot.on_message(
-    filters.me & filters.command(["approve", "pm"], COMMAND_HAND_LER) & filters.private
-)
+@TelePyroBot.on_message(filters.me & filters.command(
+    ["approve", "pm"], COMMAND_HAND_LER) & filters.private)
 async def approve_pm(c: TelePyroBot, m: Message):
     if m.chat.type == "private":
         user_id = m.chat.id

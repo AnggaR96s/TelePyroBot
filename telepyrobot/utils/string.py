@@ -4,8 +4,15 @@ import time
 
 def replace_text(text):
     return (
-        text.replace('"', "").replace("\\r", "").replace("\\n", "\n").replace("\\", "")
-    )
+        text.replace(
+            '"',
+            "").replace(
+            "\\r",
+            "").replace(
+                "\\n",
+                "\n").replace(
+                    "\\",
+            ""))
 
 
 async def extract_time(m, time_val):
@@ -94,7 +101,7 @@ def split_quotes(text: str):
             return text.split(None, 1)
 
         key = remove_escapes(text[1:counter].strip())
-        rest = text[counter + 1 :].strip()
+        rest = text[counter + 1:].strip()
         if not key:
             key = text[0] + text[0]
         return list(filter(None, [key, rest]))

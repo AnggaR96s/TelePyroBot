@@ -1,11 +1,13 @@
 import os
-from asyncio import sleep
 import shutil
-from removebg import RemoveBg
-from telepyrobot.__main__ import TelePyroBot
+from asyncio import sleep
+
 from pyrogram import filters
 from pyrogram.types import Message
+from removebg import RemoveBg
+
 from telepyrobot import COMMAND_HAND_LER, REMBG_API_KEY
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -18,7 +20,8 @@ Use this remove background from images!
 """
 
 
-@TelePyroBot.on_message(filters.me & filters.command("rembg", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me &
+                        filters.command("rembg", COMMAND_HAND_LER))
 async def remove_bg(c: TelePyroBot, m: Message):
     if not REMBG_API_KEY:
         await m.edit(

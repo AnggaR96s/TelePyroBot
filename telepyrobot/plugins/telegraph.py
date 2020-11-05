@@ -1,11 +1,13 @@
 import os
 import time
 from datetime import datetime
-from telegraph import upload_file
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
 from pyrogram.types import Message
+from telegraph import upload_file
+
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -16,7 +18,8 @@ Paste media to telegraph!
 """
 
 
-@TelePyroBot.on_message(filters.command("telegraph", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("telegraph",
+                                        COMMAND_HAND_LER) & filters.me)
 async def telegraph(c: TelePyroBot, m: Message):
     replied = m.reply_to_message
     start_t = datetime.now()

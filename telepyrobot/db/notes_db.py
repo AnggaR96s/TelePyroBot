@@ -1,5 +1,7 @@
 import threading
-from sqlalchemy import Column, UnicodeText, Integer
+
+from sqlalchemy import Column, Integer, UnicodeText
+
 from telepyrobot.db import BASE, SESSION
 from telepyrobot.utils.msg_types import Types
 
@@ -14,7 +16,6 @@ class Notes(BASE):
     file_ref = Column(UnicodeText)
 
     def __init__(self, user_id, name, value, msgtype, file_id, file_ref):
-
         """initializing db"""
         self.user_id = user_id
         self.name = name
@@ -49,7 +50,13 @@ SELF_NOTES = {}
 # CONTACT = 11
 
 
-def save_note(user_id, note_name, note_data, msgtype, file_id=None, file_ref=None):
+def save_note(
+        user_id,
+        note_name,
+        note_data,
+        msgtype,
+        file_id=None,
+        file_ref=None):
     global SELF_NOTES
     with INSERTION_LOCK:
         prev = SESSION.query(Notes).get((user_id, note_name))
@@ -87,8 +94,7 @@ def get_all_notes(user_id):
     if not SELF_NOTES.get(user_id):
         SELF_NOTES[user_id] = {}
         return None
-    allnotes = list(SELF_NOTES[user_id])
-    allnotes.sort()
+    allnotes = sorted(SELF_NOTES[user_id])
     return allnotes
 
 

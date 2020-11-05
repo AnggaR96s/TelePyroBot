@@ -2,10 +2,11 @@ from telepyrobot import LOGGER
 
 
 def __list_all_plugins():
-    from os.path import dirname, basename, isfile
     import glob
+    from os.path import basename, dirname, isfile
 
-    # This generates a list of plugins in this folder for the * in __main__ to work.
+    # This generates a list of plugins in this folder for the * in __main__ to
+    # work.
     mod_paths = glob.glob(dirname(__file__) + "/*.py")
     all_plugins = [
         basename(f)[:-3]

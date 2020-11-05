@@ -1,8 +1,10 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER, LOGGER
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -34,7 +36,8 @@ Blocks the user, if you blocked it.
 """
 
 
-@TelePyroBot.on_message(filters.command("unblockpm", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("unblockpm",
+                                        COMMAND_HAND_LER) & filters.me)
 async def unblock_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
         user = m.text.split(" ", 1)[1]
@@ -53,7 +56,8 @@ async def unblock_pm(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("blockpm", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("blockpm",
+                                        COMMAND_HAND_LER) & filters.me)
 async def block_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
         user = m.text.split(" ", 1)[1]
@@ -72,7 +76,8 @@ async def block_pm(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("uprofile", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("uprofile",
+                                        COMMAND_HAND_LER) & filters.me)
 async def update_profile(c: TelePyroBot, m: Message):
     update = m.text.split(" ", 2)
     msgreply = m.reply_to_message
@@ -139,7 +144,8 @@ async def update_profile(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("setusername", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("setusername",
+                                        COMMAND_HAND_LER) & filters.me)
 async def set_username(c: TelePyroBot, m: Message):
     username = m.text.split(" ", 1)
     if " " in username:
@@ -153,7 +159,8 @@ async def set_username(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("rmusername", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("rmusername",
+                                        COMMAND_HAND_LER) & filters.me)
 async def remove_username(c: TelePyroBot, m: Message):
     try:
         await c.update_username("")
@@ -163,7 +170,8 @@ async def remove_username(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("rmpfp", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("rmpfp",
+                                        COMMAND_HAND_LER) & filters.me)
 async def remove_pfp(c: TelePyroBot, m: Message):
     photos = c.get_profile_photos("me")
     try:

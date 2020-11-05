@@ -1,12 +1,12 @@
 import asyncio
 import os
-import git
 import shutil
+
+import git
 import heroku3
-from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot.utils.cust_p_filters import sudo_filter
+
 from telepyrobot import (
     COMMAND_HAND_LER,
     HEROKU_API_KEY,
@@ -16,6 +16,8 @@ from telepyrobot import (
     OFFICIAL_UPSTREAM_REPO,
     PRIVATE_GROUP_ID,
 )
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.utils.cust_p_filters import sudo_filter
 
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (
@@ -44,7 +46,8 @@ __help__ = f"""
 """
 
 
-@TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command("update",
+                                        COMMAND_HAND_LER) & sudo_filter)
 async def updater(c: TelePyroBot, m: Message):
     if len(m.command) == 2 and m.command[1] == "force":
         force_update = True
@@ -98,13 +101,14 @@ async def updater(c: TelePyroBot, m: Message):
     try:
         remote_head_github = repo.head.reference
         commit_id = remote_head_github.commit.hexsha
-        commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
-    except:
+        commit_link = f"<a href='https://github.com/AnggaR96s/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
+    except BaseException:
         commit_link = "None"
 
     message_one = NEW_BOT_UP_DATE_FOUND.format(
-        branch_name=active_branch_name, changelog=changelog, commit_link=commit_link
-    )
+        branch_name=active_branch_name,
+        changelog=changelog,
+        commit_link=commit_link)
     message_two = NEW_UP_DATE_FOUND.format(branch_name=active_branch_name)
 
     if len(message_one) > MAX_MESSAGE_LENGTH:
@@ -125,7 +129,7 @@ async def updater(c: TelePyroBot, m: Message):
 
     await umsg.edit(message_one, disable_web_page_preview=True)
 
-    if force_update == True:
+    if force_update:
         await umsg.edit(
             "**Force-Update initiated**\n`Fetching latest version and installing it...`"
         )

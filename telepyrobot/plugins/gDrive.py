@@ -2,16 +2,18 @@ import asyncio
 import io
 import json
 import math
-import httplib2
 import os
 import time
+from mimetypes import guess_type
+
+import httplib2
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from mimetypes import guess_type
 from oauth2client.client import OAuth2WebServerFlow
-from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
+
+import telepyrobot.db.gDrive_db as db
 from telepyrobot import (
     COMMAND_HAND_LER,
     DATABASE_URL,
@@ -20,7 +22,7 @@ from telepyrobot import (
     LOGGER,
     TMP_DOWNLOAD_DIRECTORY,
 )
-import telepyrobot.db.gDrive_db as db
+from telepyrobot.__main__ import TelePyroBot
 from telepyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -44,7 +46,8 @@ G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 flow = None
 
 
-@TelePyroBot.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("gdrive",
+                                        COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("...")
     if len(m.command) > 1:
@@ -253,8 +256,10 @@ async def gDrive_upload_file(creds, file_path, message):
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"
     media_body = MediaFileUpload(
-        file_path, mimetype=mime_type, chunksize=150 * 1024 * 1024, resumable=True
-    )
+        file_path,
+        mimetype=mime_type,
+        chunksize=150 * 1024 * 1024,
+        resumable=True)
     file_name = os.path.basename(file_path)
     body = {
         "name": file_name,

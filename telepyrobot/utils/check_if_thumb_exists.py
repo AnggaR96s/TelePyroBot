@@ -1,9 +1,11 @@
 import os
 import random
 import time
+
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
+
 from telepyrobot import TMP_DOWNLOAD_DIRECTORY
 from telepyrobot.utils.run_shell_cmnd import run_command
 
@@ -11,7 +13,8 @@ from telepyrobot.utils.run_shell_cmnd import run_command
 async def is_thumb_image_exists(file_name: str):
     thumb_image_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
     if os.path.exists(thumb_image_path):
-        thumb_image_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+        thumb_image_path = os.path.join(
+            TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
     elif file_name is not None and file_name.lower().endswith(("mp4", "mkv", "webm")):
         metadata = extractMetadata(createParser(file_name))
         duration = 0

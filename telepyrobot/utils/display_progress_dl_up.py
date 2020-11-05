@@ -15,7 +15,8 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         estimated_total_time = elapsed_time + time_to_completion
 
         elapsed_time = time_formatter(milliseconds=elapsed_time)
-        estimated_total_time = time_formatter(milliseconds=estimated_total_time)
+        estimated_total_time = time_formatter(
+            milliseconds=estimated_total_time)
 
         progress = "**[{0}{1}]** \n**Progress**: __{2}%__\n".format(
             "".join(["●" for i in range(math.floor(percentage / 5))]),
@@ -32,7 +33,7 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         )
         try:
             await m.edit("{}\n {}".format(ud_type, tmp))
-        except:
+        except BaseException:
             pass
 
 

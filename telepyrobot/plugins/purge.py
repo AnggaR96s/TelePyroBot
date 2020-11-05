@@ -1,11 +1,12 @@
-import os
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
-from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
-from telepyrobot.utils.admin_check import admin_check
+import os
 
+from pyrogram import filters
+from pyrogram.types import ChatPermissions, Message
+
+from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.utils.admin_check import admin_check
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -17,7 +18,8 @@ Usage: {COMMAND_HAND_LER}purge <as a reply to the message>
 Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 
 
-@TelePyroBot.on_message(filters.command("purge", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("purge",
+                                        COMMAND_HAND_LER) & filters.me)
 async def purge(c: TelePyroBot, m: Message):
     if m.chat.type in ("supergroup", "channel"):
         await m.edit("`Incinerating these useless messages...`")
@@ -37,7 +39,9 @@ async def purge(c: TelePyroBot, m: Message):
     count_del_etion_s = 0
 
     if m.reply_to_message:
-        for a_s_message_id in range(m.reply_to_message.message_id, m.message_id):
+        for a_s_message_id in range(
+                m.reply_to_message.message_id,
+                m.message_id):
             message_ids.append(a_s_message_id)
             if len(message_ids) == TG_MAX_SELECT_LEN:
                 await c.delete_messages(
@@ -56,7 +60,8 @@ async def purge(c: TelePyroBot, m: Message):
     await m.delete()
 
 
-@TelePyroBot.on_message(filters.command("del", COMMAND_HAND_LER) & filters.me, group=3)
+@TelePyroBot.on_message(filters.command("del",
+                                        COMMAND_HAND_LER) & filters.me, group=3)
 async def del_msg(c: TelePyroBot, m: Message):
     if m.reply_to_message:
         if m.chat.type in ("supergroup", "channel"):

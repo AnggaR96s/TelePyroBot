@@ -1,11 +1,13 @@
-import time
 import os
+import time
 from platform import python_version
-from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters, __version__
-from pyrogram.types import Message
-from telepyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_REPO
+
+from pyrogram import __version__, filters
 from pyrogram.raw.all import layer
+from pyrogram.types import Message
+
+from telepyrobot import COMMAND_HAND_LER, OFFICIAL_UPSTREAM_REPO, OWNER_NAME, UB_VERSION
+from telepyrobot.__main__ import TelePyroBot
 
 # -- Constants -- #
 ALIVE_TEXT = (
@@ -102,8 +104,9 @@ async def get_id(c: TelePyroBot, m: Message):
                 user_id = rep.forward_from.id
                 if rep.forward_from.last_name:
                     user_name = (
-                        rep.forward_from.first_name + " " + rep.forward_from.last_name
-                    )
+                        rep.forward_from.first_name +
+                        " " +
+                        rep.forward_from.last_name)
                 else:
                     user_name = rep.forward_from.first_name
                 username = rep.forward_from.username

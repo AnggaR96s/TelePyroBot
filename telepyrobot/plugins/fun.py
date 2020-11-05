@@ -1,10 +1,12 @@
-from telepyrobot.__main__ import TelePyroBot
-from telepyrobot.utils.pyrohelpers import ReplyCheck
+import os
+import random
+
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import COMMAND_HAND_LER
-import random
-import os
+from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.utils.pyrohelpers import ReplyCheck
 
 # CONSTANTS
 DART_E_MOJI = "🎯"
@@ -66,7 +68,8 @@ async def roll_dice(c: TelePyroBot, m: Message):
     )
 
 
-@TelePyroBot.on_message(filters.command(["runs", "run"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["runs", "run"],
+                                        COMMAND_HAND_LER) & filters.me)
 async def runs(c: TelePyroBot, m: Message):
     run = random.choice(RUN_STRINGS)
     if m.reply_to_message:

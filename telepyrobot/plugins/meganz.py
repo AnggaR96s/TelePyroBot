@@ -1,16 +1,17 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+
+from mega import Mega
 from pyrogram import filters
 from pyrogram.types import Message
+
 from telepyrobot import (
     COMMAND_HAND_LER,
+    LOGGER,
     MEGANZ_EMAIL,
     MEGANZ_PASSWORD,
-    LOGGER,
     TMP_DOWNLOAD_DIRECTORY,
 )
-from mega import Mega
-
+from telepyrobot.__main__ import TelePyroBot
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -36,7 +37,8 @@ except Exception as ef:
     LOGGER.info(ef)
 
 
-@TelePyroBot.on_message(filters.command("megainfo", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("megainfo",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mega_info(c: TelePyroBot, m: Message):
     if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
@@ -57,7 +59,8 @@ async def mega_info(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("megadl", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("megadl",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mega_dl(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
         dl_url = m.text.split(" ", 1)[1]
@@ -75,7 +78,8 @@ async def mega_dl(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("megafind", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("megafind",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mega_find(c: TelePyroBot, m: Message):
     if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
@@ -91,7 +95,8 @@ async def mega_find(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("megaup", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("megaup",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mega_upload(c: TelePyroBot, m: Message):
     if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
@@ -113,7 +118,8 @@ async def mega_upload(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("megaupdir", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("megaupdir",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mega_upload_dir(c: TelePyroBot, m: Message):
     if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
@@ -139,15 +145,14 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
             remoteFolder = megaC.find("TelePyroBot_Uploads")[0]
         except Exception as ef:
             if ef == "TypeError: 'NoneType' object is not subscriptable":
-                nwfl = megaC.create_folder('TelePyroBot_Uploads')
+                nwfl = megaC.create_folder("TelePyroBot_Uploads")
                 remoteFolder = nwfl["TelePyroBot_Uploads"]
             else:
                 await m.edit_text(ef)
                 return
 
         if os.path.exists(folderLoc):
-            files = os.listdir(folderLoc)
-            files.sort()
+            files = sorted(os.listdir(folderLoc))
             for file in files:
                 try:
                     required_file = folderLoc + file
@@ -178,7 +183,8 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
     return
 
 
-@TelePyroBot.on_message(filters.command("megaimport", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("megaimport",
+                                        COMMAND_HAND_LER) & filters.me)
 async def mega_import(c: TelePyroBot, m: Message):
     if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
